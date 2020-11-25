@@ -1,2 +1,7 @@
 /build
 *.class
+
+# intelliJ idea
+.idea/
+/gyrolike.iml
+out/
