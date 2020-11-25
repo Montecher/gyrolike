@@ -5,7 +5,8 @@ public enum Tile {
     WALL (true, false, false),
     FLOOR (true, false, false),
     AIR (false, false, false),
-    COLUMN (true, false, true),
+    COLUMN_RED (true, false, true),
+    COLUMN_BLUE (true, false, true),
     PLATFORM(true, false, true);
 
     public final boolean solid;
