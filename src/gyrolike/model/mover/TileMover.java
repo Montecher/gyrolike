@@ -7,5 +7,7 @@ public abstract class TileMover implements Mover{
     protected DiscretePosition[] positionList;
 
     @Override
-    public abstract void move(Game gameStatus);
+    public int getInterval() {
+        return 10;
+    }
 }
