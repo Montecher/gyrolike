@@ -14,4 +14,8 @@ public class ContinuousPosition {
 	public double getY() {
 		return this.y;
 	}
+
+	public ContinuousPosition displace(ContinuousDisplacement disp) {
+		return new ContinuousPosition(x + disp.getX(), y + disp.getY());
+	}
 }
