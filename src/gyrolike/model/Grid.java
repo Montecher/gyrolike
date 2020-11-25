@@ -28,6 +28,10 @@ public class Grid {
         return this.spriteHash.get(sprite);
     }
 
+    public void setSpritePos(Sprite sprite, ContinuousPosition pos) {
+        this.spriteHash.put(sprite, pos);
+    }
+
     public int getWidth() {
         return width;
     }
