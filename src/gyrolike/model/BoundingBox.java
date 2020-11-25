@@ -30,16 +30,16 @@ public class BoundingBox {
 	}
 
 	public ContinuousPosition getTopLeft() {
-		return new ContinuousPosition(x, y);
-	}
-	public ContinuousPosition getTopRight() {
-		return new ContinuousPosition(x+w, y);
-	}
-	public ContinuousPosition getBottomLeft() {
 		return new ContinuousPosition(x, y+h);
 	}
-	public ContinuousPosition getBottomRight() {
+	public ContinuousPosition getTopRight() {
 		return new ContinuousPosition(x+w, y+h);
+	}
+	public ContinuousPosition getBottomLeft() {
+		return new ContinuousPosition(x, y);
+	}
+	public ContinuousPosition getBottomRight() {
+		return new ContinuousPosition(x+w, y);
 	}
 
 	public boolean intersects(DiscretePosition pos) {
