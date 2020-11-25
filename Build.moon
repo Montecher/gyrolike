@@ -10,8 +10,8 @@ var 'DATA_OUT', _.patsubst DATA, 'data/%', 'build/classes/%'
 var 'JARFILE', "build/#{NAME}.jar"
 var 'MANIFEST', 'build/Manifest.mf'
 
-var 'JAVA', 'java'
-var 'JAVAC', 'javac'
+var 'JAVA', '/usr/lib/jvm/java-1.8-openjdk/bin/java'
+var 'JAVAC', '/usr/lib/jvm/java-1.8-openjdk/bin/javac'
 var 'JAR', 'jar'
 
 var 'JAVACFLAGS', '-Xlint:unchecked'
