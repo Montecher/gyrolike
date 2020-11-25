@@ -1,5 +1,8 @@
 package gyrolike.model.sprite;
 
+import gyrolike.model.BoundingBox;
+import gyrolike.model.ContinuousPosition;
+
 abstract public class Sprite {
     protected boolean gravity;
     protected boolean ai;
@@ -28,5 +31,9 @@ abstract public class Sprite {
         this.ai = ai;
         this.width = width;
         this.height = height;
+    }
+
+    public BoundingBox getBoundingBox(ContinuousPosition pos) {
+        return new BoundingBox(pos, this.getWidth(), this.getHeight());
     }
 }
