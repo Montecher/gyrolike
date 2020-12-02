@@ -152,12 +152,20 @@ public class Level {
 				}
 
 				case 's': {
-					// unimplemented
+					String[] info = line.split(" ");
+					sprites.put(Sprite.get(info[0]), new ContinuousPosition(Double.parseDouble(info[1]), Double.parseDouble(info[2])));
 					break;
 				}
 
 				case 'D': {
-					// unimplemented
+					String[] info = line.split(" ");
+					ArrayList<String> fckJava = new ArrayList<>();
+					for (int i = 0; i < info.length; i++) {
+						if (i != 0) {
+							fckJava.add(info[i]);
+						}
+					}
+					movers.add(Mover.get(info[0], fckJava));
 					break;
 				}
 
