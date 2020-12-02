@@ -10,7 +10,6 @@ public class ResourceLoader {
 	private ResourceLoader() {} // static-only
 
 	public static InputStream getStream(String path) {
-		System.out.println("getStream("+path+")");
 		return ResourceLoader.class.getResourceAsStream(path);
 	}
 
