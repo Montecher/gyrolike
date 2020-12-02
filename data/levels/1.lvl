@@ -20,6 +20,6 @@ FFFRFWFCRFFF
 ...R....R...
 [sprites]
 Player 0 0
-Enemy 0 4
+Birb 0 4
 [dynamic]
 ColumnMover 7 1 3

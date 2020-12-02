@@ -2,6 +2,7 @@ package gyrolike.model.sprite;
 
 import gyrolike.model.BoundingBox;
 import gyrolike.model.ContinuousPosition;
+import gyrolike.model.mover.SpriteMover;
 
 abstract public class Sprite {
     protected boolean gravity;
@@ -9,6 +10,7 @@ abstract public class Sprite {
 //    protected Producer<SpriteAI> aiType;
     protected double width;
     protected double height;
+    protected boolean faceLeft;
 
     public boolean hasGravity() {
         return gravity;
@@ -31,6 +33,7 @@ abstract public class Sprite {
         this.ai = ai;
         this.width = width;
         this.height = height;
+        this.faceLeft = false;
     }
 
     public BoundingBox getBoundingBox(ContinuousPosition pos) {
@@ -45,4 +48,14 @@ abstract public class Sprite {
 			throw new RuntimeException(e);
 		}
 	}
+
+	public abstract SpriteMover getAi();
+
+    public boolean isFaceLeft() {
+        return faceLeft;
+    }
+
+    public void setFaceLeft(boolean faceLeft) {
+        this.faceLeft = faceLeft;
+    }
 }
