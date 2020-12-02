@@ -5,7 +5,7 @@ import gyrolike.model.Game;
 import gyrolike.model.Tile;
 
 public class ColumnMover extends TileMover {
-    private int x, y, height;
+    private final int x, y, height;
 
     public ColumnMover(int x, int y, int height) {
         this.x = x;
