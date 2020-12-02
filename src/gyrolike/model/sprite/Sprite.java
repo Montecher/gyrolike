@@ -36,4 +36,13 @@ abstract public class Sprite {
     public BoundingBox getBoundingBox(ContinuousPosition pos) {
         return new BoundingBox(pos, this.getWidth(), this.getHeight());
     }
+
+	public static Sprite get(String name) {
+		try {
+			Class<?> clazz = Class.forName("gyrolike.model.sprite."+name);
+			return (Sprite) clazz.getConstructor().newInstance();
+		} catch(Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
