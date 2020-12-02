@@ -1,0 +1,25 @@
+[data]
+name=Test
+time=100
+previous=
+next=2
+width=12
+height=5
+[tileset]
+.=AIR
+W=WALL
+R=ROPE
+F=FLOOR
+C=COLUMN_RED
+P=PLATFORM
+[tiles]
+...R.W..R...
+FFFRFWFCRFFF
+...R.W.CR...
+...R.W.CR...
+...R....R...
+[sprites]
+Player 0 0
+Enemy 0 4
+[dynamic]
+Column 7 1 3

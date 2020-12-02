@@ -4,11 +4,13 @@ import javax.imageio.ImageIO;
 
 import java.awt.image.*;
 import java.io.*;
+import java.util.*;
 
 public class ResourceLoader {
 	private ResourceLoader() {} // static-only
 
 	public static InputStream getStream(String path) {
+		System.out.println("getStream("+path+")");
 		return ResourceLoader.class.getResourceAsStream(path);
 	}
 
@@ -16,7 +18,7 @@ public class ResourceLoader {
 		try(InputStream is = getStream(path)) {
 			return ImageIO.read(is);
 		} catch(IOException e) {
-			throw new RuntimeException("Failed to load image ressource at path "+path, e);
+			throw new RuntimeException("Failed to load image resource at path "+path, e);
 		}
 	}
 
@@ -32,7 +34,21 @@ public class ResourceLoader {
 			}
 			return sb.toString();
 		} catch(IOException e) {
-			throw new RuntimeException("Failed to load text ressource at path "+path, e);
+			throw new RuntimeException("Failed to load text resource at path "+path, e);
+		}
+	}
+
+	public static List<String> getLines(String path) {
+		try(InputStream is = getStream(path)) {
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+			List<String> lines = new ArrayList<>();
+			String line;
+			while((line = rd.readLine()) != null) {
+				lines.add(line);
+			}
+			return lines;
+		} catch(IOException e) {
+			throw new RuntimeException("Failed to load line resource at path "+path, e);
 		}
 	}
 
@@ -47,7 +63,7 @@ public class ResourceLoader {
 			}
 			return os.toByteArray();
 		} catch(IOException e) {
-			throw new RuntimeException("Failed to load binary ressource at path "+path, e);
+			throw new RuntimeException("Failed to load binary resource at path "+path, e);
 		}
 	}
 }

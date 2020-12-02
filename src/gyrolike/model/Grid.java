@@ -1,5 +1,6 @@
 package gyrolike.model;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -19,9 +20,11 @@ public class Grid {
         this.height = height;
     }
 
-    public Grid loadLevel(String levelName) {
-        // implement here loading logic
-        throw new IllegalStateException("unimplemented");
+    public static Grid loadFrom(Level lvl) {
+        Grid grid = new Grid(lvl.width, lvl.height);
+        grid.tileGrid = lvl.getTiles();
+        grid.spriteHash = lvl.getSprites();
+        return grid;
     }
 
     public ContinuousPosition getSpritePos(Sprite sprite) {
@@ -68,8 +71,15 @@ public class Grid {
     public Tile getTileAt(DiscretePosition coord) {
         return this.tileGrid[coord.getX()][coord.getY()];
     }
+    public Tile getTileAt(int x, int y) {
+        return this.tileGrid[x][y];
+    }
 
     public void setTileAt(DiscretePosition goal, Tile tile) {
         this.tileGrid[goal.getX()][goal.getY()] = tile;
+    }
+
+    public Map<Sprite, ContinuousPosition> getSprites() {
+        return Collections.unmodifiableMap(this.spriteHash);
     }
 }

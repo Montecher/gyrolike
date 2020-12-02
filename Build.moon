@@ -2,7 +2,7 @@ var 'MAIN', 'Main'
 var 'NAME', 'Observable'
 
 var 'SOURCES', _.wildcard 'src/**.java'
-var 'DATA', _.wildcard 'data/*'
+var 'DATA', _.wildcard 'data/**'
 var 'DATA', _.exclude DATA, 'data/.gitkeep'
 
 var 'CLASSES', _.patsubst SOURCES, 'src/%.java', 'build/classes/%.class'
