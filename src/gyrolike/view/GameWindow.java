@@ -22,6 +22,7 @@ public class GameWindow extends JFrame {
 		gamepad.addListener(Key.BLUE, () -> game.setSelectedColor(Tile.COLUMN_BLUE));
 		gamepad.addListener(Key.CUP, () -> game.setColumnDirection(Direction.UP));
 		gamepad.addListener(Key.CDOWN, () -> game.setColumnDirection(Direction.DOWN));
+		gamepad.addListener(Key.PAUSE, game::togglePause);
 		addKeyListener(gamepad);
 
 		game.addTickListener(Functional.CodeBlock.toRunnable((Functional.CodeBlock) () -> {

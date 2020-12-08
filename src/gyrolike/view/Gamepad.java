@@ -1,21 +1,5 @@
 package gyrolike.view;
 
-import static java.awt.event.KeyEvent.VK_A;
-import static java.awt.event.KeyEvent.VK_D;
-import static java.awt.event.KeyEvent.VK_DOWN;
-import static java.awt.event.KeyEvent.VK_E;
-import static java.awt.event.KeyEvent.VK_F;
-import static java.awt.event.KeyEvent.VK_KP_DOWN;
-import static java.awt.event.KeyEvent.VK_KP_LEFT;
-import static java.awt.event.KeyEvent.VK_KP_RIGHT;
-import static java.awt.event.KeyEvent.VK_KP_UP;
-import static java.awt.event.KeyEvent.VK_LEFT;
-import static java.awt.event.KeyEvent.VK_Q;
-import static java.awt.event.KeyEvent.VK_R;
-import static java.awt.event.KeyEvent.VK_RIGHT;
-import static java.awt.event.KeyEvent.VK_S;
-import static java.awt.event.KeyEvent.VK_UP;
-import static java.awt.event.KeyEvent.VK_Z;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -29,6 +13,7 @@ import java.util.function.Consumer;
 
 import gyrolike.model.Key;
 import static gyrolike.model.Key.*;
+import static java.awt.event.KeyEvent.*;
 
 public class Gamepad extends KeyAdapter {
 
@@ -72,6 +57,9 @@ public class Gamepad extends KeyAdapter {
 		keybinds.put(VK_E, BLUE);
 		keybinds.put(VK_R, CUP);
 		keybinds.put(VK_F, CDOWN);
+
+		keybinds.put(VK_P, PAUSE);
+		keybinds.put(VK_ESCAPE, PAUSE);
 	}
 
 	private Map<Key, Boolean> keys = new HashMap<>();

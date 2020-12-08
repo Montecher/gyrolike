@@ -74,6 +74,7 @@ public class Game {
     public synchronized void setSelectedColor(Tile selectedColor) {
         if (selectedColor == Tile.COLUMN_RED || selectedColor == Tile.COLUMN_BLUE) {
             this.selectedColor = selectedColor;
+			this.columnDirection = Direction.NONE;
         } else {
             throw new IllegalArgumentException("not a column !");
         }
@@ -101,12 +102,12 @@ public class Game {
 	}
 
 	public synchronized void start() {
-		if(this.thread != null) throw new IllegalStateException("Already running");
+		if(this.thread != null) return;
 		this.thread = new Thread(this::threadFn);
 		this.thread.start();
 	}
 	public synchronized void stop() {
-		if(this.thread == null) throw new IllegalStateException("Already stopped");
+		if(this.thread == null) return;
 		this.thread.interrupt();
 		this.thread = null;
 	}
@@ -117,6 +118,7 @@ public class Game {
 	public synchronized void pause() { paused = true; }
 	public synchronized void unpause() { paused = false; }
 	public synchronized boolean isPaused() { return paused; }
+	public synchronized void togglePause() { paused = !paused; }
 
 	public synchronized State getState() { return state; }
 	private void setState(State s) { state = s; }
@@ -124,14 +126,18 @@ public class Game {
 
 	private void threadFn() {
 		startGame();
+		runTickListeners();
 		try {
 			long tickMs = (long) (1000 / TICKRATE);
 			long nextTime = new Date().getTime() + tickMs;
 			while(!Thread.interrupted()) {
-				while(isPaused()) Thread.sleep(tickMs);
+				while(isPaused()) {
+					Thread.sleep(tickMs);
+					nextTime = new Date().getTime() + tickMs;
+				}
 				long beforeTime = new Date().getTime();
-				runTickListeners();
 				tick();
+				runTickListeners();
 				long currentTime = new Date().getTime();
 				if(DEBUG) System.out.println("Tick duration: "+(currentTime-beforeTime)+"ms");
 				if(currentTime<nextTime) Thread.sleep(nextTime - currentTime);
