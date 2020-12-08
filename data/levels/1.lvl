@@ -3,7 +3,7 @@ name=Test
 time=100
 previous=
 next=2
-width=12
+width=13
 height=5
 [tileset]
 .=AIR
@@ -11,15 +11,17 @@ W=WALL
 R=ROPE
 F=FLOOR
 C=COLUMN_RED
+B=COLUMN_BLUE
 P=PLATFORM
 [tiles]
-...R.W..R...
-FFFRFWFCRFFF
-...R.W.CR...
-...R.W.CR...
-...R....R...
+...R.W..R....
+FFFRFWFCRFFFB
+...R.W.CR...B
+...R.W.CR....
+...R....R....
 [sprites]
 Player 0 0
 Birb 0 4
 [dynamic]
 ColumnMover 7 1 3
+ColumnMover 12 2 2
