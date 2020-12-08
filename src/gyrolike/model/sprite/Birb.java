@@ -7,7 +7,7 @@ public class Birb extends Enemy {
     private final BirbMover birbMover;
 
     public Birb() {
-        super(true, true, 1, 1);
+        super(true, true, 0.8, 0.8);
         this.birbMover = new BirbMover(this);
     }
 

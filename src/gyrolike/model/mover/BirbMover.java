@@ -21,20 +21,30 @@ public class BirbMover extends SpriteMover {
         int birbRight = (int) birbBox.getBottomRight().getX();
         int birbBottom = (int) birbBox.getBottomRight().getY();
         if (sprite.isFaceLeft()) {
-            if ((birbLeft == 0 || gameStatus.getGrid().getTileAt(new DiscretePosition(birbLeft-1, birbBottom)) == Tile.AIR) && (birbBottom == 0 || gameStatus.getGrid().getTileAt(new DiscretePosition(birbLeft-1, birbBottom-1)) == Tile.AIR)) {
-                gameStatus.getGrid().setSpritePos(sprite, new ContinuousPosition(birbLeft-1, birbBottom));
-            } else if ((birbRight == gameStatus.getGrid().getWidth()-1 || gameStatus.getGrid().getTileAt(new DiscretePosition(birbRight+1, birbBottom)) == Tile.AIR) && (birbBottom == 0 || gameStatus.getGrid().getTileAt(new DiscretePosition(birbLeft+1, birbBottom-1)) == Tile.AIR)) {
-                sprite.setFaceLeft(false);
-                gameStatus.getGrid().setSpritePos(sprite, new ContinuousPosition(birbLeft+1, birbRight));
+            if (birbLeft == 0) {
+                    sprite.setFaceLeft(false);
+            } else if (gameStatus.getGrid().getTileAt(birbLeft-1, birbBottom) == Tile.AIR || gameStatus.getGrid().getTileAt(birbLeft-1, birbBottom) == Tile.ROPE) {
+                if (birbBottom == 0) {
+                    gameStatus.getGrid().setSpritePos(sprite, new ContinuousPosition(birbLeft-1, birbBottom));
+                } else if (!(gameStatus.getGrid().getTileAt(birbLeft-1, birbBottom-1) == Tile.AIR || gameStatus.getGrid().getTileAt(birbLeft-1, birbBottom-1) == Tile.ROPE)) {
+                    gameStatus.getGrid().setSpritePos(sprite, new ContinuousPosition(birbLeft-1, birbBottom));
+                } else {
+                    sprite.setFaceLeft(false);
+                }
             } else {
                 sprite.setFaceLeft(false);
             }
         } else {
-            if ((birbRight == gameStatus.getGrid().getWidth()-1 || gameStatus.getGrid().getTileAt(new DiscretePosition(birbRight+1, birbBottom)) == Tile.AIR) && (birbBottom == 0 || gameStatus.getGrid().getTileAt(new DiscretePosition(birbLeft+1, birbBottom-1)) == Tile.AIR)) {
-                gameStatus.getGrid().setSpritePos(sprite, new ContinuousPosition(birbLeft+1, birbRight));
-            } else if ((birbLeft == 0 || gameStatus.getGrid().getTileAt(new DiscretePosition(birbLeft-1, birbBottom)) == Tile.AIR) && (birbBottom == 0 || gameStatus.getGrid().getTileAt(new DiscretePosition(birbLeft-1, birbBottom-1)) == Tile.AIR)) {
-                gameStatus.getGrid().setSpritePos(sprite, new ContinuousPosition(birbLeft-1, birbBottom));
+            if (birbLeft == gameStatus.getGrid().getWidth()-1) {
                 sprite.setFaceLeft(true);
+            } else if (gameStatus.getGrid().getTileAt(birbLeft+1, birbBottom) == Tile.AIR || gameStatus.getGrid().getTileAt(birbLeft+1, birbBottom) == Tile.ROPE) {
+                if (birbBottom == 0) {
+                    gameStatus.getGrid().setSpritePos(sprite, new ContinuousPosition(birbLeft+1, birbBottom));
+                } else if (!(gameStatus.getGrid().getTileAt(birbLeft+1, birbBottom-1) == Tile.AIR || gameStatus.getGrid().getTileAt(birbLeft+1, birbBottom-1) == Tile.ROPE)) {
+                    gameStatus.getGrid().setSpritePos(sprite, new ContinuousPosition(birbLeft+1, birbBottom));
+                } else {
+                    sprite.setFaceLeft(true);
+                }
             } else {
                 sprite.setFaceLeft(true);
             }
