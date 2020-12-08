@@ -1,14 +1,15 @@
 package gyrolike.model.mover;
 
 import gyrolike.model.Game;
+import gyrolike.model.exceptions.GameEnd;
+
 import java.lang.reflect.*;
-import java.util.*;
 
 import java.util.List;
 
 public interface Mover {
     int getInterval();
-    void move(Game gameStatus);
+    void move(Game gameStatus) throws GameEnd;
 
 	public static Mover get(String name, List<String> params) {
 		try {

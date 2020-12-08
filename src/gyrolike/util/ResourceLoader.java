@@ -10,7 +10,13 @@ public class ResourceLoader {
 	private ResourceLoader() {} // static-only
 
 	public static InputStream getStream(String path) {
-		return ResourceLoader.class.getResourceAsStream(path);
+		try {
+			InputStream is = ResourceLoader.class.getResourceAsStream(path);
+			if(is == null) throw new Exception();
+			return is;
+		} catch(Exception e) {
+			throw new RuntimeException("Can't load "+path, e);
+		}
 	}
 
 	public static BufferedImage getImage(String path) {

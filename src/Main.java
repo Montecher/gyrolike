@@ -7,5 +7,6 @@ public class Main {
 		game.loadLevel("1");
 		GameWindow win = new GameWindow(game);
 		win.setVisible(true);
+		game.start();
 	}
 }

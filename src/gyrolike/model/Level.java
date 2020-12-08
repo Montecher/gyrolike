@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import gyrolike.model.sprite.Sprite;
+import gyrolike.model.mover.GravityMover;
 import gyrolike.model.mover.Mover;
 import gyrolike.util.ResourceLoader;
 
@@ -171,6 +172,11 @@ public class Level {
 
 				default: throw new IllegalStateException("Shouldn't be in state "+((char) parsemode)+" line: "+line+", in level "+id);
 			}
+		}
+
+		for(Sprite s: sprites.keySet()) {
+			if(s.hasAi()) movers.add(s.getAi());
+			if(s.hasGravity()) movers.add(new GravityMover(s));
 		}
 
 		return new Level(name, time, previous, next, tiles, sprites, movers);

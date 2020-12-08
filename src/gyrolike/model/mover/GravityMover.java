@@ -13,6 +13,12 @@ public class GravityMover extends SpriteMover {
 
     @Override
     public void move(Game gamaStatus) {
+		if(gamaStatus.getGrid().touches(sprite, t -> t.rope)) return;
+		if(gamaStatus.getGrid().getSpritePos(sprite).getY() <= 0) {
+			gamaStatus.getGrid().setSpritePos(sprite, new ContinuousPosition(gamaStatus.getGrid().getSpritePos(sprite).getX(), 0));
+			return;
+		}
+
         BoundingBox spriteBox = this.sprite.getBoundingBox(gamaStatus.getGrid().getSpritePos(sprite));
 
         DiscretePosition leftCheck = new DiscretePosition((int) spriteBox.getBottomLeft().getX(), (int) (spriteBox.getBottomLeft().getY() - G));

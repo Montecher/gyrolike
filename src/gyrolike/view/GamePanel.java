@@ -26,6 +26,7 @@ public class GamePanel extends JPanel {
 	private Game game;
 	private int scrollX;
 	private Map<Tile, BufferedImage> imageCache = new HashMap<>();
+	private Map<Class<? extends Sprite>, BufferedImage[]> spriteCache = new HashMap<>();
 
 	public GamePanel(Game game) {
 		super();
@@ -57,7 +58,10 @@ public class GamePanel extends JPanel {
 		for(Map.Entry<Sprite, ContinuousPosition> e: game.getGrid().getSprites().entrySet()) {
 			int scrX = (int) (e.getValue().getX() * TILESIZE - scrollX);
 			int scrY = (int) (HEIGHT - e.getValue().getY() * TILESIZE - TILESIZE);
-			g.drawLine(scrX, scrY, (int) (e.getKey().getWidth() * TILESIZE), (int) (e.getKey().getHeight() * TILESIZE));
+			int w = (int) (e.getKey().getWidth() * TILESIZE);
+			int h = (int) (e.getKey().getHeight() * TILESIZE);
+
+			g.drawImage(getImageForSprite(e.getKey()), scrX, scrY, w, h, null);
 		}
 	}
 
@@ -72,5 +76,18 @@ public class GamePanel extends JPanel {
 		g.dispose();
 		imageCache.put(tile, img);
 		return img;
+	}
+
+	private BufferedImage getImageForSprite(Sprite spr) {
+		Class<? extends Sprite> clazz = spr.getClass();
+
+		BufferedImage[] imgs = spriteCache.get(clazz);
+		if(imgs != null) return imgs[spr.getImageId()];
+
+		int sprImgCount = spr.getImageCount();
+		imgs = new BufferedImage[sprImgCount];
+		for(int i=0; i<sprImgCount; i++) imgs[i] = ResourceLoader.getImage("/sprites/"+clazz.getSimpleName().toLowerCase()+i+".png");
+		spriteCache.put(clazz, imgs);
+		return imgs[spr.getImageId()];
 	}
 }

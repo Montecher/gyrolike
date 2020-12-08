@@ -1,5 +1,8 @@
 package gyrolike.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BoundingBox {
 	private double x, y, w, h;
 
@@ -50,5 +53,16 @@ public class BoundingBox {
 	}
 	public boolean intersects(BoundingBox o) {
 		return intersects(o.getTopLeft()) || intersects(o.getTopRight()) || intersects(o.getBottomLeft()) || intersects(o.getBottomRight());
+	}
+
+	public List<DiscretePosition> getIntersectingCells() {
+		List<DiscretePosition> pos = new ArrayList<>();
+		for(int x=(int) this.x; x<(int) this.x+this.w+1; x++) {
+			for(int y=(int) this.y; y<(int) this.y+this.h+1; y++) {
+				DiscretePosition dpos = new DiscretePosition(x, y);
+				if(this.intersects(dpos)) pos.add(dpos);
+			}
+		}
+		return pos;
 	}
 }

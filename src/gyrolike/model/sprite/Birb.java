@@ -3,7 +3,7 @@ package gyrolike.model.sprite;
 import gyrolike.model.mover.BirbMover;
 import gyrolike.model.mover.SpriteMover;
 
-public class Birb  extends Enemy{
+public class Birb extends Enemy {
     private final BirbMover birbMover;
 
     public Birb() {
@@ -15,4 +15,10 @@ public class Birb  extends Enemy{
     public SpriteMover getAi() {
         return this.birbMover;
     }
+
+	@Override
+	public int getImageId() { return 0; }
+
+	@Override
+	public int getImageCount() { return 1; }
 }

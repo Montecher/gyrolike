@@ -58,4 +58,7 @@ abstract public class Sprite {
     public void setFaceLeft(boolean faceLeft) {
         this.faceLeft = faceLeft;
     }
+
+    public abstract int getImageId();
+    public abstract int getImageCount();
 }
