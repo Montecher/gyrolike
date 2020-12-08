@@ -24,12 +24,14 @@ public class GameWindow extends JFrame {
 		gamepad.addListener(Key.CDOWN, () -> game.setColumnDirection(Direction.DOWN));
 		addKeyListener(gamepad);
 
-		game.addTickListener(Functional.CodeBlock.toRunnable(() -> SwingUtilities.invokeAndWait(() -> {
-			long timeBefore = new Date().getTime();
-			this.repaint();
-			long timeAfter = new Date().getTime();
-			if(game.DEBUG) System.out.println("Frame: "+(timeAfter-timeBefore)+"ms");
-		})));
+		game.addTickListener(Functional.CodeBlock.toRunnable((Functional.CodeBlock) () -> {
+			SwingUtilities.invokeAndWait(() -> {
+				long timeBefore = new Date().getTime();
+				this.repaint();
+				long timeAfter = new Date().getTime();
+				if(game.DEBUG) System.out.println("Frame: "+(timeAfter-timeBefore)+"ms");
+			});
+		}));
 
 		add(new GamePanel(game));
 		pack();

@@ -13,6 +13,9 @@ import gyrolike.model.exceptions.GameLose;
 import gyrolike.model.exceptions.GameWin;
 import gyrolike.model.mover.Mover;
 import gyrolike.model.mover.PlayerMover;
+import gyrolike.model.sprite.Enemy;
+import gyrolike.model.sprite.Sprite;
+import gyrolike.util.Functional.MaybeConsumer;
 
 public class Game {
 	public static enum State {
@@ -34,6 +37,7 @@ public class Game {
     private List<Runnable> tickListeners = new ArrayList<>();
 	private Thread thread;
 	private Map<Mover, Integer> delays = new HashMap<>();
+	private List<MaybeConsumer<Game, GameEnd>> checkers = new ArrayList<>();
 	private boolean paused;
 	private State state = State.RUNNING;
 	private String lossMessage;
@@ -151,6 +155,9 @@ public class Game {
 	private void startGame() {
 		for(Mover m: grid.getMovers()) delays.put(m, 0);
 		delays.put(new PlayerMover(grid.getPlayer()), 0);
+		checkers.add(Game::testWin);
+		checkers.add(Game::testCollision);
+		checkers.add(Game::testCrush);
 	}
 
 	private int tickNo = 0;
@@ -177,6 +184,23 @@ public class Game {
 			}
 		}
 
+		for(MaybeConsumer<Game, ? extends GameEnd> c: checkers) {
+			try {
+				c.run(this);
+			} catch(Exception e) {
+				e.printStackTrace();
+			} catch(GameEnd e) {
+				if(e instanceof GameWin) {
+					setState(State.WON);
+				} else if(e instanceof GameLose) {
+					lossMessage = ((GameLose) e).getReason();
+					setState(State.LOST);
+				}
+				stop();
+				return;
+			}
+		}
+
 		if(tickNo++ % TICKRATE == 0) timeRemaining--;
 		if(timeRemaining == 0) {
 			lossMessage = "Out of time";
@@ -187,5 +211,26 @@ public class Game {
 
 		System.out.println("Time: "+timeRemaining);
 		System.out.println("Player xy: "+grid.getSpritePos(grid.getPlayer()).getX()+","+grid.getSpritePos(grid.getPlayer()).getY());
+	}
+
+	public static void win() throws GameWin {
+		throw new GameWin();
+	}
+	public static void lose(String reason) throws GameLose {
+		throw new GameLose(reason);
+	}
+
+	private static void testWin(Game game) throws GameEnd {
+		// unimplemented
+	}
+
+	private static void testCollision(Game game) throws GameEnd {
+		for(Sprite s: game.grid.getIntersectingSprites(game.grid.getPlayer())) {
+			if(s instanceof Enemy) lose("Collided with a "+s.getClass().getSimpleName());
+		}
+	}
+
+	private static void testCrush(Game game) throws GameEnd {
+		if(game.grid.touches(game.getGrid().getPlayer(), t -> t.solid)) lose("Crushed");
 	}
 }
