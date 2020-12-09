@@ -22,6 +22,8 @@ FFFRFWFCRFFFB
 [sprites]
 Player 0 0
 Birb 0 4
+Bomb 2 4
+Bomb 6 0
 [dynamic]
 ColumnMover 7 1 3
 ColumnMover 12 2 2

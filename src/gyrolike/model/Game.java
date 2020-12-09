@@ -13,7 +13,9 @@ import gyrolike.model.exceptions.GameLose;
 import gyrolike.model.exceptions.GameWin;
 import gyrolike.model.mover.Mover;
 import gyrolike.model.mover.PlayerMover;
+import gyrolike.model.sprite.Bomb;
 import gyrolike.model.sprite.Enemy;
+import gyrolike.model.sprite.Player;
 import gyrolike.model.sprite.Sprite;
 import gyrolike.util.Functional.MaybeConsumer;
 
@@ -130,7 +132,7 @@ public class Game {
 		try {
 			long tickMs = (long) (1000 / TICKRATE);
 			long nextTime = new Date().getTime() + tickMs;
-			while(!Thread.interrupted()) {
+			while(!Thread.interrupted() && state == State.RUNNING) {
 				while(isPaused()) {
 					Thread.sleep(tickMs);
 					nextTime = new Date().getTime() + tickMs;
@@ -227,7 +229,17 @@ public class Game {
 	}
 
 	private static void testWin(Game game) throws GameEnd {
-		// unimplemented
+		boolean hasBombs = false;
+		ArrayList<Sprite> toRemove = new ArrayList<>();
+		for(Sprite s: game.grid.getSprites().keySet()) if(s instanceof Bomb) {
+			for(Sprite sp: game.grid.getIntersectingSprites(s)) if(sp instanceof Player) {
+				toRemove.add(s);
+			} else {
+				hasBombs = true;
+			}
+		}
+		for(Sprite s: toRemove) game.grid.deleteSprite(s);
+		if(!hasBombs) win();
 	}
 
 	private static void testCollision(Game game) throws GameEnd {

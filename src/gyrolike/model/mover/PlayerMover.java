@@ -18,8 +18,6 @@ public class PlayerMover extends SpriteMover {
 
 	@Override
 	public void move(Game game) {
-		System.out.println("here");
-
 		boolean left = game.hasKey(LEFT) && !game.hasKey(RIGHT);
 		boolean right = game.hasKey(RIGHT) && !game.hasKey(LEFT);
 		boolean up = game.hasKey(UP) && !game.hasKey(DOWN);

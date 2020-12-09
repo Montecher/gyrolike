@@ -41,6 +41,10 @@ public class Grid {
         this.spriteHash.put(sprite, pos);
     }
 
+	public void deleteSprite(Sprite sprite) {
+		this.spriteHash.remove(sprite);
+	}
+
     public int getWidth() {
         return width;
     }
