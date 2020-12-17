@@ -17,8 +17,8 @@ public class Birb extends Enemy {
     }
 
 	@Override
-	public int getImageId() { return 0; }
+	public int getImageId() { return faceLeft ? 0 : 1; }
 
 	@Override
-	public int getImageCount() { return 1; }
+	public int getImageCount() { return 2; }
 }
